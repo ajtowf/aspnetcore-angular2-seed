@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "q": "^1.4.1",
     "rimraf": "^2.5.2"
   }
 }
