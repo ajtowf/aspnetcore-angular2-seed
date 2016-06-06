@@ -6,7 +6,7 @@ gulp.task('clean', function (cb) {
     return rimraf('./wwwroot/lib/', cb);
 });
 
-gulp.task('copy:lib', function () {
+gulp.task('copy:lib', ['clean'], function () {
     var libs = [
         "@angular",
         "systemjs",
