@@ -1,4 +1,14 @@
-﻿var gulp = require('gulp'),
+var paths = {
+    tsSource: './scripts/*.ts',
+    tsOutput: './wwwroot/app/'
+};
+
+var gulp = require('gulp'),
+    rimraf = require('rimraf'),
+    merge = require('merge'),
+    ts = require('gulp-typescript');
+
+var gulp = require('gulp'),
     Q = require('q'),
     rimraf = require('rimraf');
 
@@ -31,4 +41,18 @@ gulp.task('copy:lib', ['clean'], function () {
     });
 
     return Q.all(promises);
+});
+
+var tsProject = ts.createProject('./scripts/tsconfig.json');
+var util = require("gulp-util");
+
+gulp.task('ts-compile', function () {
+    var tsResult = gulp.src(paths.tsSource)
+        .pipe(ts(tsProject));
+    return merge([tsResult.js.pipe(gulp.dest(paths.tsOutput))]);
+});
+
+// Link this to the "opening of the project" and you ll  get a compile on change.
+gulp.task('watch', ['ts-compile'], function () {
+    gulp.watch(paths.tsSource, ['ts-compile']);
 });
